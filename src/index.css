@@ -11,3 +11,7 @@ body,
 body {
   @apply bg-white text-black dark:bg-black dark:text-white;
 }
+
+#root {
+  @apply grid place-items-center;
+}

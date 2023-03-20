@@ -8,9 +8,14 @@ import {
 } from "react-router-dom";
 import App from "./App";
 import "./index.css";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter(
-  createRoutesFromElements(<Route path="/" element={<App />}></Route>)
+  createRoutesFromElements(
+    <Route path="/" element={<App />}>
+      <Route path="/register" element={<Register />} />
+    </Route>
+  )
 );
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
