@@ -2,20 +2,9 @@ import { ChangeEvent, FormEvent, useReducer } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase/config";
 import { useNavigate } from "react-router-dom";
+import { AuthFormAction, AuthFormState } from "../types/auth-form";
 
-type RegisterState = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
-type RegisterAction = {
-  type: keyof RegisterState;
-  payload: string;
-};
-
-const initialState: RegisterState = {
+const initialState: AuthFormState = {
   username: "",
   email: "",
   password: "",
@@ -23,9 +12,9 @@ const initialState: RegisterState = {
 };
 
 function registerReducer(
-  state: RegisterState,
-  action: RegisterAction
-): RegisterState {
+  state: AuthFormState,
+  action: AuthFormAction<AuthFormState>
+): AuthFormState {
   switch (action.type) {
     case "username":
       return { ...state, username: action.payload };
@@ -44,7 +33,7 @@ export default function Register() {
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     dispatch({
-      type: event.target.name as keyof RegisterState,
+      type: event.target.name as keyof AuthFormState,
       payload: event.target.value,
     });
   }
@@ -62,7 +51,7 @@ export default function Register() {
       );
       await updateProfile(response.user, { displayName: state.username });
     } catch (error) {
-      console.log(error);
+      return console.log(error);
     }
     navigate("/chat");
   }
@@ -74,7 +63,9 @@ export default function Register() {
       <h2 className="w-fit justify-self-center rounded bg-neutral-900 p-1 font-bold uppercase tracking-widest">
         Crie sua conta
       </h2>
-      <label htmlFor="username">Nome de Usuário</label>
+      <label htmlFor="username" className="w-fit">
+        Nome de Usuário
+      </label>
       <input
         onChange={handleChange}
         value={state.username}
@@ -85,7 +76,9 @@ export default function Register() {
         placeholder="Nome de usuário"
         className="rounded bg-neutral-900 p-2"
       />
-      <label htmlFor="email">E-mail</label>
+      <label htmlFor="email" className="w-fit">
+        E-mail
+      </label>
       <input
         onChange={handleChange}
         value={state.email}
@@ -96,7 +89,9 @@ export default function Register() {
         placeholder="usuario@email.com"
         className="rounded bg-neutral-900 p-2"
       />
-      <label htmlFor="password">Senha</label>
+      <label htmlFor="password" className="w-fit">
+        Senha
+      </label>
       <input
         onChange={handleChange}
         value={state.password}
@@ -108,7 +103,9 @@ export default function Register() {
         placeholder="Mínimo de 6 dígitos"
         className="rounded bg-neutral-900 p-2"
       />
-      <label htmlFor="confirm-password">Confirmar senha</label>
+      <label htmlFor="confirm-password" className="w-fit">
+        Confirmar senha
+      </label>
       <input
         onChange={handleChange}
         value={state.confirmPassword}
