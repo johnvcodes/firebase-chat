@@ -10,12 +10,14 @@ import App from "./App";
 import "./index.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProtectedRoute from "./utilities/ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route element={<ProtectedRoute />}></Route>
     </Route>
   )
 );
