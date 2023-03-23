@@ -40,7 +40,7 @@ export default function Login() {
     } catch (error) {
       return console.log(error);
     }
-    navigate("/chat");
+    navigate("/dashboard");
   }
   return (
     <form

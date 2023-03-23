@@ -53,7 +53,7 @@ export default function Register() {
     } catch (error) {
       return console.log(error);
     }
-    navigate("/chat");
+    navigate("/dashboard");
   }
   return (
     <form
