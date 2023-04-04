@@ -16,9 +16,9 @@ A simple chat application:
 
 ## Preview
 
-| Light Mode                                                                         | Dark Mode                                                                        |
-| ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| <img src="./src/assets/images/app-preview-light.png" width="100%" height="100%" /> | <img src="./src/assets/images/app-preview-dark.png" width="100%" height="75%" /> |
+| Light Mode                                                                         | Dark Mode                                                                         |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| <img src="./src/assets/images/app-preview-light.png" width="100%" height="100%" /> | <img src="./src/assets/images/app-preview-dark.png" width="100%" height="100%" /> |
 
 ## Links
 
