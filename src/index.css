@@ -13,5 +13,5 @@ body {
 }
 
 #root {
-  @apply grid place-items-center;
+  @apply flex justify-center;
 }
