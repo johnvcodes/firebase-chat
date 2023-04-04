@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import {
-  arrayUnion,
   collection,
   doc,
   getDocs,
@@ -23,14 +22,12 @@ export default function AddContact({}: Props) {
     event.preventDefault();
     if (!user) return;
 
-    //   Query to find if there is a user with the e-mail
     let usersQuery = query(
       collection(firestore, "users"),
       where("email", "==", input)
     );
     let response = await getDocs(usersQuery);
 
-    //   Combine users' ids and add to each other's contacts
     response.forEach(async (item) => {
       if (!item.exists()) return;
       try {
@@ -38,7 +35,7 @@ export default function AddContact({}: Props) {
           user.uid > item.data().uid
             ? user.uid + item.data().uid
             : item.data().uid + user.uid;
-        // Update current user
+
         await updateDoc(doc(firestore, "chatRooms", user.uid), {
           [combinedId + ".data"]: {
             uid: item.data().uid,
@@ -47,7 +44,7 @@ export default function AddContact({}: Props) {
           [combinedId + ".date"]: serverTimestamp(),
           [combinedId + ".lastMessage"]: "",
         });
-        // Update contact user
+
         await updateDoc(doc(firestore, "chatRooms", item.data().uid), {
           [combinedId + ".data"]: {
             uid: user.uid,
@@ -56,7 +53,7 @@ export default function AddContact({}: Props) {
           [combinedId + ".date"]: serverTimestamp(),
           [combinedId + ".lastMessage"]: "",
         });
-        //   Create messages document
+
         await setDoc(doc(firestore, "chatMessages", combinedId), {
           messages: [],
         });
@@ -66,6 +63,7 @@ export default function AddContact({}: Props) {
     });
     setInput("");
   }
+
   return (
     <form
       onSubmit={handleAddContact}

@@ -1,14 +1,14 @@
 import { ChangeEvent, FormEvent, useReducer } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
-  User,
   UserCredential,
 } from "firebase/auth";
-import { auth, firestore } from "../firebase/config";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthFormAction, AuthFormState } from "../types/auth-form";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { AuthFormAction, AuthFormState } from "../types/auth-form";
+import { auth, firestore } from "../firebase/config";
+import ThemeButton from "../components/ThemeButton";
 
 const initialState: AuthFormState = {
   username: "",
@@ -88,9 +88,12 @@ export default function Register() {
       onSubmit={handleSubmit}
       className="relative m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
     >
-      <h2 className="w-fit justify-self-center rounded bg-neutral-900 p-1 font-bold uppercase tracking-widest">
-        Crie sua conta
-      </h2>
+      <div className="flex items-center justify-center gap-2 justify-self-center">
+        <h2 className="rounded bg-neutral-200 p-2 font-bold uppercase tracking-widest dark:bg-neutral-900">
+          Crie sua conta
+        </h2>
+        <ThemeButton />
+      </div>
       <label htmlFor="username" className="w-fit">
         Nome de Usuário
       </label>
@@ -102,7 +105,7 @@ export default function Register() {
         name="username"
         required
         placeholder="Nome de usuário"
-        className="rounded bg-neutral-900 p-2"
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
       />
       <label htmlFor="email" className="w-fit">
         E-mail
@@ -115,7 +118,7 @@ export default function Register() {
         name="email"
         required
         placeholder="usuario@email.com"
-        className="rounded bg-neutral-900 p-2"
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
       />
       <label htmlFor="password" className="w-fit">
         Senha
@@ -129,7 +132,7 @@ export default function Register() {
         required
         minLength={6}
         placeholder="Mínimo de 6 dígitos"
-        className="rounded bg-neutral-900 p-2"
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
       />
       <label htmlFor="confirm-password" className="w-fit">
         Confirmar senha
@@ -143,9 +146,9 @@ export default function Register() {
         required
         minLength={6}
         placeholder="Mínimo de 6 dígitos"
-        className="rounded bg-neutral-900 p-2"
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
       />
-      <label htmlFor="avatar" className="w-fit">
+      {/* <label htmlFor="avatar" className="w-fit">
         Foto de perfil
       </label>
       <input
@@ -154,8 +157,8 @@ export default function Register() {
         type="file"
         id="avatar"
         name="avatar"
-        className="rounded bg-neutral-900 p-2"
-      />
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+      /> */}
       <Link to="/login">Já possui uma conta? Entrar</Link>
       <Link
         to="/"
@@ -163,7 +166,7 @@ export default function Register() {
       >
         Voltar
       </Link>
-      <button className="w-fit justify-self-center rounded bg-neutral-900 p-1">
+      <button className="w-fit justify-self-center rounded bg-neutral-200 p-1 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">
         Confirmar
       </button>
     </form>

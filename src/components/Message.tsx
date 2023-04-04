@@ -1,7 +1,6 @@
+import { Timestamp } from "firebase/firestore";
 import { format, formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { Timestamp } from "firebase/firestore";
-import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 type Props = {

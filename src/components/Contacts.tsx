@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { firestore } from "../firebase/config";
 import { doc, onSnapshot } from "firebase/firestore";
-import { useAuth } from "../contexts/AuthContext";
-import ContactCard from "./ContactCard";
-
 import { nanoid } from "nanoid";
+import { firestore } from "../firebase/config";
+import { Contact } from "../types/contact-type";
+import { useAuth } from "../contexts/AuthContext";
 import { useChat } from "../contexts/ChatContext";
 import AddContact from "./AddContact";
 import SearchContact from "./SearchContact";
-import { Contact } from "../types/contact-type";
+import ContactCard from "./ContactCard";
 
 export default function Contacts() {
   const { user } = useAuth();

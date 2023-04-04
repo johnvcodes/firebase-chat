@@ -1,21 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter,
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
-import ProtectedRoute from "./utilities/ProtectedRoute";
+import "./index.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import "./index.css";
 import Home from "./pages/Home";
 import Chat from "./components/Chat";
+import ProtectedRoute from "./utilities/ProtectedRoute";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

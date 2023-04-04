@@ -1,8 +1,9 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { ChangeEvent, FormEvent, useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../firebase/config";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { AuthFormAction, AuthFormState } from "../types/auth-form";
+import { auth } from "../firebase/config";
+import ThemeButton from "../components/ThemeButton";
 
 const initialState: Pick<AuthFormState, "email" | "password"> = {
   email: "",
@@ -48,9 +49,12 @@ export default function Login() {
       onSubmit={handleSubmit}
       className="relative m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
     >
-      <h2 className="w-fit justify-self-center rounded bg-neutral-900 p-1 font-bold uppercase tracking-widest">
-        Entre em sua conta
-      </h2>
+      <div className="flex items-center justify-center gap-2 justify-self-center">
+        <h2 className="rounded bg-neutral-200 p-2 font-bold uppercase tracking-widest dark:bg-neutral-900">
+          Entre em sua conta
+        </h2>
+        <ThemeButton />
+      </div>
       <label htmlFor="email" className="w-fit">
         E-mail
       </label>
@@ -62,7 +66,7 @@ export default function Login() {
         name="email"
         required
         placeholder="usuario@email.com"
-        className="rounded bg-neutral-900 p-2"
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
       />
       <label htmlFor="password" className="w-fit">
         Senha
@@ -76,7 +80,7 @@ export default function Login() {
         required
         minLength={6}
         placeholder="Mínimo de 6 dígitos"
-        className="rounded bg-neutral-900 p-2"
+        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
       />
       <Link to="/register" className="w-fit">
         Não possui uma conta? Criar
@@ -87,7 +91,7 @@ export default function Login() {
       >
         Voltar
       </Link>
-      <button className="w-fit justify-self-center rounded bg-neutral-900 p-1">
+      <button className="w-fit justify-self-center rounded bg-neutral-200 p-1 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">
         Confirmar
       </button>
     </form>

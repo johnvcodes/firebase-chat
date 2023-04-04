@@ -1,6 +1,5 @@
-import React, { createContext, ReactNode, useContext, useReducer } from "react";
+import { createContext, ReactNode, useContext, useReducer } from "react";
 import { Contact } from "../types/contact-type";
-
 import { useAuth } from "./AuthContext";
 
 type ActionType = {

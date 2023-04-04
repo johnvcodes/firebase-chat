@@ -1,4 +1,22 @@
 @tailwind base;
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: red;
+}
+
+*::-webkit-scrollbar {
+  @apply w-[2px];
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-neutral-300 dark:bg-neutral-700;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-t from-amber-500 to-rose-500;
+}
+
 @tailwind components;
 @tailwind utilities;
 
