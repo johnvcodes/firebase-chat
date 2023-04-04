@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Contact } from "./Contacts";
+import { Contact } from "../types/contact-type";
 
 type Props = {
   id: string;
@@ -25,9 +25,9 @@ export default function ContactCard({ id, contact, handleSelect }: Props) {
       <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-rose-500">
         {contact.data.displayName.slice(0, 1)}
       </div>
-      <div className="flex grow flex-col gap-2">
+      <div className="flex grow flex-col gap-1">
         <h2 className="grow">{contact.data.displayName}</h2>
-        <span className="flex h-2 w-2 items-center text-sm">
+        <span className="flex w-full items-center text-sm">
           {contact.lastMessage}
         </span>
       </div>
