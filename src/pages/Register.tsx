@@ -78,6 +78,7 @@ export default function Register() {
         email: state.email,
         createdAt: serverTimestamp(),
       });
+      await setDoc(doc(firestore, "chatRooms", response.user.uid), {});
     } catch (error) {
       console.log(error);
     }
