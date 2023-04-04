@@ -12,10 +12,11 @@ import { useChat } from "../contexts/ChatContext";
 import { nanoid } from "nanoid";
 import { format, formatDistance, formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import Message from "./Message";
 
 type Message = {
   id: string;
-  text?: string;
+  text: string;
   senderId: string;
   date: Timestamp;
 };
@@ -76,33 +77,12 @@ export default function Chat() {
       </h1>
       <div className="flex flex-col gap-2 overflow-x-hidden p-2">
         {messages.map((message) => (
-          <div
+          <Message
             key={message.id}
-            className={`${
-              message.senderId === user?.uid ? "self-end" : "self-start"
-            } flex flex-col gap-1`}
-          >
-            <p
-              className={`${
-                message.senderId === user?.uid
-                  ? "self-end bg-blue-500 "
-                  : "self-start bg-green-500 "
-              } w-fit rounded p-2`}
-            >
-              {message.text}
-            </p>
-            <time
-              dateTime={format(message.date.toDate(), "dd/MM")}
-              className={`${
-                message.senderId === user?.uid ? "self-end" : "self-start"
-              } text-xs`}
-            >
-              {formatDistanceToNow(message.date.toDate(), {
-                locale: ptBR,
-                addSuffix: true,
-              })}
-            </time>
-          </div>
+            senderId={message.senderId}
+            text={message.text}
+            date={message.date}
+          />
         ))}
       </div>
       <form
