@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { ChangeEvent, FormEvent, useReducer } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/config";
 import { AuthFormAction, AuthFormState } from "../types/auth-form";
 
@@ -42,10 +42,11 @@ export default function Login() {
     }
     navigate("/dashboard");
   }
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
+      className="relative m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
     >
       <h2 className="w-fit justify-self-center rounded bg-neutral-900 p-1 font-bold uppercase tracking-widest">
         Entre em sua conta
@@ -77,6 +78,15 @@ export default function Login() {
         placeholder="Mínimo de 6 dígitos"
         className="rounded bg-neutral-900 p-2"
       />
+      <Link to="/register" className="w-fit">
+        Não possui uma conta? Criar
+      </Link>
+      <Link
+        to="/"
+        className="absolute -top-10 rounded border border-neutral-300 bg-neutral-50 p-1 dark:border-neutral-700 dark:bg-neutral-800"
+      >
+        Voltar
+      </Link>
       <button className="w-fit justify-self-center rounded bg-neutral-900 p-1">
         Confirmar
       </button>
