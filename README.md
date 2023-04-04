@@ -1,4 +1,4 @@
-#Firebase Chat
+# Firebase Chat
 
 A simple chat application:
 
