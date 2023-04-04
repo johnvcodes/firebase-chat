@@ -37,6 +37,9 @@ export default function Chat() {
       (response) => {
         if (!response.exists()) return;
         setMessages(response.data().messages);
+      },
+      (error) => {
+        return;
       }
     );
     return () => unsubscribe();

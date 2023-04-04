@@ -42,7 +42,6 @@ export default function Register() {
   const navigate = useNavigate();
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    console.log(event.target.files);
     let { name, files, value } = event.target;
 
     dispatch({

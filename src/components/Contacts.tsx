@@ -38,6 +38,9 @@ export default function Contacts() {
       (response) => {
         if (!response.exists()) return;
         setContacts(response.data() as Contact[]);
+      },
+      (error) => {
+        return;
       }
     );
 
