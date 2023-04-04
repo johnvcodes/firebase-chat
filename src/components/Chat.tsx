@@ -71,7 +71,7 @@ export default function Chat() {
 
   return (
     <div className="relative flex grow flex-col justify-end">
-      <h1 className="absolute top-2 left-2">
+      <h1 className="absolute top-2 left-2 rounded border border-neutral-300 p-2 dark:border-neutral-700">
         Conversando com {chat.data.displayName}
       </h1>
       <div className="flex flex-col gap-2 overflow-x-hidden p-2">
