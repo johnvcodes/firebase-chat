@@ -3,9 +3,10 @@ export type AuthFormState = {
   email: string;
   password: string;
   confirmPassword: string;
+  avatar?: File;
 };
 
 export type AuthFormAction<T> = {
   type: keyof T;
-  payload: string;
+  payload: T[keyof T];
 };
