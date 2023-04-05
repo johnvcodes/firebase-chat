@@ -1,5 +1,11 @@
 import { FormEvent, useState } from "react";
-import { Timestamp, arrayUnion, doc, updateDoc } from "firebase/firestore";
+import {
+  Timestamp,
+  arrayUnion,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { firestore } from "../firebase/config";
 import { useAuth } from "../contexts/AuthContext";
@@ -14,6 +20,7 @@ export default function SendMessage() {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (!user) return;
+    if (!input) return;
     try {
       await updateDoc(doc(firestore, "chatMessages", chat.chatId), {
         messages: arrayUnion({
@@ -23,16 +30,20 @@ export default function SendMessage() {
           date: Timestamp.now(),
         }),
       });
-    } catch (error) {}
+    } catch (error) {
+      return;
+    }
 
     setInput("");
 
     try {
       await updateDoc(doc(firestore, "chatRooms", user.uid), {
         [chat.chatId + ".lastMessage"]: input,
+        [chat.chatId + ".date"]: serverTimestamp(),
       });
       await updateDoc(doc(firestore, "chatRooms", chat.data.uid), {
         [chat.chatId + ".lastMessage"]: input,
+        [chat.chatId + ".date"]: serverTimestamp(),
       });
     } catch (error) {
       console.log(error);
@@ -54,6 +65,7 @@ export default function SendMessage() {
         name="sendMessage"
         id="send-message"
         placeholder="Envie uma mensagem..."
+        required
         className="w-full bg-transparent p-2 focus:outline-none"
       />
       <button className="h-full border-l bg-neutral-200 p-2 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">

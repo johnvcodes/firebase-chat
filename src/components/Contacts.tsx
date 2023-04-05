@@ -16,10 +16,12 @@ export default function Contacts() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [search, setSearch] = useState<string>("");
 
-  const filterContacts = Object.values(contacts).filter((item) => {
-    if (!search) return true;
-    return item.data.displayName.toLowerCase().includes(search.toLowerCase());
-  });
+  const filterContacts = Object.values(contacts)
+    .sort((a, b) => Number(b.date?.toDate()) - Number(a.date?.toDate()))
+    .filter((item) => {
+      if (!search) return true;
+      return item.data.displayName.toLowerCase().includes(search.toLowerCase());
+    });
 
   async function handleSelect(contact: Contact) {
     if (!user) return;

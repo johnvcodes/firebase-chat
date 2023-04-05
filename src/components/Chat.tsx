@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useChat } from "../contexts/ChatContext";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
+import { useNavigate } from "react-router-dom";
 
 type Message = {
   id: string;
@@ -18,10 +19,11 @@ export default function Chat() {
   const { chat } = useChat();
 
   const [messages, setMessages] = useState<Message[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
-    if (!chat.chatId) return;
+    if (!chat.chatId) return navigate("/dashboard");
     const unsubscribe = onSnapshot(
       doc(firestore, "chatMessages", chat.chatId),
       (response) => {
