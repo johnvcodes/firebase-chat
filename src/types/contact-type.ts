@@ -6,5 +6,5 @@ export type Contact = {
     uid: string;
   };
   lastMessage: string;
-  date: Timestamp;
+  date: Timestamp | null;
 };
