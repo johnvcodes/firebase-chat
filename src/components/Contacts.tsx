@@ -38,7 +38,9 @@ export default function Contacts() {
       doc(firestore, "chatRooms", user.uid),
       (response) => {
         if (!response.exists()) return;
-        setContacts(response.data() as Contact[]);
+        setContacts(
+          response.data({ serverTimestamps: "previous" }) as Contact[]
+        );
       },
       (error) => {
         return;
