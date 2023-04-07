@@ -27,7 +27,7 @@ body,
 }
 
 body {
-  @apply bg-white text-black dark:bg-black dark:text-white;
+  @apply text-neutral-950 dark:bg-neutral-950 bg-neutral-200 dark:text-neutral-50;
 }
 
 #root {
