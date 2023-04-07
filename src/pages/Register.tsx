@@ -8,7 +8,6 @@ import {
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { AuthFormAction, AuthFormState } from "../types/auth-form";
 import { auth, firestore } from "../firebase/config";
-import ThemeButton from "../components/ThemeButton";
 
 const initialState: AuthFormState = {
   username: "",
@@ -68,7 +67,6 @@ export default function Register() {
     } catch (error) {
       return console.log(error);
     }
-    navigate("/dashboard");
 
     try {
       await setDoc(doc(firestore, "users", response.user.uid), {
@@ -88,12 +86,9 @@ export default function Register() {
       onSubmit={handleSubmit}
       className="relative m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
     >
-      <div className="flex items-center justify-center gap-2 justify-self-center">
-        <h2 className="rounded bg-neutral-200 p-2 font-bold uppercase tracking-widest dark:bg-neutral-900">
-          Crie sua conta
-        </h2>
-        <ThemeButton />
-      </div>
+      <h2 className="rounded bg-neutral-200 p-2 font-bold uppercase tracking-widest dark:bg-neutral-900">
+        Crie sua conta
+      </h2>
       <label htmlFor="username" className="w-fit">
         Nome de Usuário
       </label>

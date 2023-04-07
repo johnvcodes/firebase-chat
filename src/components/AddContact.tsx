@@ -26,6 +26,9 @@ export default function AddContact({}: Props) {
       collection(firestore, "users"),
       where("email", "==", input)
     );
+
+    setInput("");
+
     let response = await getDocs(usersQuery);
 
     response.forEach(async (item) => {
@@ -41,8 +44,7 @@ export default function AddContact({}: Props) {
             uid: item.data().uid,
             displayName: item.data().displayName,
           },
-          [combinedId + ".date"]: serverTimestamp(),
-          [combinedId + ".lastMessage"]: "",
+          [combinedId + ".lastMessage"]: {},
         });
 
         await updateDoc(doc(firestore, "chatRooms", item.data().uid), {
@@ -50,8 +52,7 @@ export default function AddContact({}: Props) {
             uid: user.uid,
             displayName: user.displayName,
           },
-          [combinedId + ".date"]: serverTimestamp(),
-          [combinedId + ".lastMessage"]: "",
+          [combinedId + ".lastMessage"]: {},
         });
 
         await setDoc(doc(firestore, "chatMessages", combinedId), {
@@ -61,7 +62,6 @@ export default function AddContact({}: Props) {
         console.log(error);
       }
     });
-    setInput("");
   }
 
   return (

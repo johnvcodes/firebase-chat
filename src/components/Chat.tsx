@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { doc, onSnapshot, Timestamp } from "firebase/firestore";
 import { firestore } from "../firebase/config";
 import { useAuth } from "../contexts/AuthContext";
@@ -6,8 +6,9 @@ import { useChat } from "../contexts/ChatContext";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
 import { useNavigate } from "react-router-dom";
+import MessagesBox from "./MessagesBox";
 
-type Message = {
+export type Message = {
   id: string;
   text: string;
   senderId: string;
@@ -28,7 +29,7 @@ export default function Chat() {
       doc(firestore, "chatMessages", chat.chatId),
       (response) => {
         if (!response.exists()) return;
-        setMessages(response.data().messages);
+        setMessages(response.data({ serverTimestamps: "estimate" }).messages);
       },
       (error) => {
         return;
@@ -40,18 +41,7 @@ export default function Chat() {
 
   return (
     <div className="flex grow flex-col justify-end">
-      <div className="flex flex-col-reverse gap-2 overflow-x-hidden p-2">
-        {messages
-          .sort((a, b) => Number(b.date.toDate()) - Number(a.date.toDate()))
-          .map((message) => (
-            <Message
-              key={message.id}
-              senderId={message.senderId}
-              text={message.text}
-              date={message.date}
-            />
-          ))}
-      </div>
+      <MessagesBox messages={messages} />
       <SendMessage />
     </div>
   );

@@ -4,10 +4,10 @@ import { useAuth } from "./AuthContext";
 
 type ActionType = {
   type: string;
-  payload: Omit<Contact, "date">;
+  payload: Contact;
 };
 
-type ChatState = Omit<Contact, "date"> & {
+type ChatState = Contact & {
   chatId: string;
 };
 
@@ -24,7 +24,7 @@ const initialState: ChatState = {
     displayName: "",
     uid: "",
   },
-  lastMessage: "",
+  lastMessage: { content: "", date: null, senderId: "" },
 };
 
 export function useChat() {

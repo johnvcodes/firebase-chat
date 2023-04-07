@@ -31,7 +31,7 @@ export default function ContactCard({ id, contact, handleSelect }: Props) {
       <div className="flex  grow flex-col gap-1 ">
         <h2 className="grow">{contact.data.displayName}</h2>
         <span className="flex w-full max-w-[160px] items-center overflow-hidden overflow-ellipsis whitespace-nowrap text-sm">
-          {contact.lastMessage}
+          {contact.lastMessage.content}
         </span>
       </div>
     </NavLink>

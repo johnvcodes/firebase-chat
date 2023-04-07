@@ -38,12 +38,18 @@ export default function SendMessage() {
 
     try {
       await updateDoc(doc(firestore, "chatRooms", user.uid), {
-        [chat.chatId + ".lastMessage"]: input,
-        [chat.chatId + ".date"]: serverTimestamp(),
+        [chat.chatId + ".lastMessage"]: {
+          content: input,
+          date: serverTimestamp(),
+          senderId: user.uid,
+        },
       });
       await updateDoc(doc(firestore, "chatRooms", chat.data.uid), {
-        [chat.chatId + ".lastMessage"]: input,
-        [chat.chatId + ".date"]: serverTimestamp(),
+        [chat.chatId + ".lastMessage"]: {
+          content: input,
+          date: serverTimestamp(),
+          senderId: user.uid,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -65,7 +71,7 @@ export default function SendMessage() {
         name="sendMessage"
         id="send-message"
         placeholder="Envie uma mensagem..."
-        required
+        autoComplete="off"
         className="w-full bg-transparent p-2 focus:outline-none"
       />
       <button className="h-full border-l bg-neutral-200 p-2 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">
