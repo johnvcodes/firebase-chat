@@ -13,19 +13,22 @@ export default function Header() {
     } catch (error) {
       console.log(error);
     }
-    navigate("/");
   }
   return (
-    <header className="flex items-center justify-between border-b border-neutral-300 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-800">
+    <header className="flex items-center justify-between border-b border-neutral-300 bg-neutral-50 p-2 dark:border-neutral-700 dark:bg-neutral-900">
       <div className="flex items-center gap-2">
         <h2 className="bg-gradient-to-r from-amber-500 to-rose-500 bg-clip-text font-bold uppercase tracking-widest text-transparent">
           Firebase Chat
         </h2>
-        <ThemeButton />
       </div>
       <div className="flex items-center gap-2">
-        {user && user.displayName && <p>{user.displayName}</p>}
-        <button onClick={logout}>Sair</button>
+        <ThemeButton />
+        {user && (
+          <>
+            {user.displayName && <p>{user.displayName}</p>}
+            <button onClick={logout}>Sair</button>
+          </>
+        )}
       </div>
     </header>
   );

@@ -5,6 +5,9 @@ export type Contact = {
     displayName: string;
     uid: string;
   };
-  lastMessage: string;
-  date: Timestamp | null;
+  lastMessage: {
+    content: string;
+    date: Timestamp | null;
+    senderId: string;
+  };
 };
