@@ -23,4 +23,4 @@ A simple chat application:
 ## Links
 
 [Repository](https://github.com/johnvcodes/firebase-chat)
-[Live Preview]()
+[Live Preview](https://johnvcodes-firebase-chat.netlify.app/)
