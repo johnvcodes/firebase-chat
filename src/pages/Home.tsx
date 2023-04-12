@@ -1,23 +1,20 @@
 import { Link } from "react-router-dom";
-import ThemeButton from "../components/ThemeButton";
 
 export default function Home() {
   return (
-    <div className="flex h-full items-center justify-center gap-2">
-      <div className="flex items-center justify-center gap-2">
-        <Link
-          to="/register"
-          className="flex items-center justify-center rounded bg-neutral-200 p-1 font-bold uppercase tracking-widest transition-transform hover:scale-105 dark:bg-neutral-800"
-        >
-          Criar conta
-        </Link>
-        <Link
-          to="/login"
-          className="flex items-center justify-center rounded bg-neutral-200 p-1 font-bold uppercase tracking-widest transition-transform hover:scale-105 dark:bg-neutral-800"
-        >
-          Entrar
-        </Link>
-      </div>
+    <div className="m-auto flex items-center gap-2">
+      <Link
+        to="/login"
+        className="flex min-w-[100px] items-center justify-center rounded border border-neutral-400 p-2 shadow-md transition-colors duration-300 hover:border-neutral-500 focus:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
+      >
+        Entrar
+      </Link>
+      <Link
+        to="/register"
+        className="flex min-w-[100px] items-center justify-center rounded border border-neutral-400 p-2 shadow-md transition-colors duration-300 hover:border-neutral-500 focus:border-neutral-500 dark:border-neutral-700 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
+      >
+        Criar conta
+      </Link>
     </div>
   );
 }
