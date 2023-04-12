@@ -1,96 +1,102 @@
 import { ChangeEvent, FormEvent, useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { AuthFormAction, AuthFormState } from "../types/auth-form";
+import { FirebaseError } from "firebase/app";
 import { auth } from "../firebase/config";
-import ThemeButton from "../components/ThemeButton";
 
-const initialState: Pick<AuthFormState, "email" | "password"> = {
+type LoginState = {
+  email: string;
+  password: string;
+};
+
+type LoginAction<T = LoginState> = {
+  type: keyof T;
+  payload: string;
+};
+
+const loginInitialState: LoginState = {
   email: "",
   password: "",
 };
 
-function loginReducer(
-  state: typeof initialState,
-  action: AuthFormAction<typeof initialState>
-): typeof initialState {
+function loginReducer(state: LoginState, action: LoginAction): LoginState {
   switch (action.type) {
     case "email":
-      return { ...state, email: action.payload };
+      return {
+        ...state,
+        email: action.payload,
+      };
     case "password":
       return { ...state, password: action.payload };
+    default:
+      return state;
   }
 }
 
 export default function Login() {
-  const [state, dispatch] = useReducer(loginReducer, initialState);
   const navigate = useNavigate();
+  const [login, dispatch] = useReducer(loginReducer, loginInitialState);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    dispatch({
-      type: event.target.name as keyof typeof initialState,
-      payload: event.target.value,
-    });
+    const { name, value } = event.target;
+    dispatch({ type: name as keyof LoginState, payload: value });
   }
 
-  async function handleSubmit(event: FormEvent) {
+  async function handleLogin(event: FormEvent) {
     event.preventDefault();
-    if (state.password.length < 6) return;
     try {
-      await signInWithEmailAndPassword(auth, state.email, state.password);
+      await signInWithEmailAndPassword(auth, login.email, login.password);
     } catch (error) {
-      return console.log(error);
+      let message = "Unknown error";
+      if (error instanceof FirebaseError) message = error.code;
+      return console.log(message);
     }
+    navigate("/dashboard");
   }
-
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="relative m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
-    >
-      <h2 className="rounded bg-neutral-200 p-2 font-bold uppercase tracking-widest dark:bg-neutral-900">
-        Entre em sua conta
-      </h2>
-
-      <label htmlFor="email" className="w-fit">
+    <form onSubmit={handleLogin} className="m-auto grid min-w-[300px] gap-4">
+      <Link
+        to="/"
+        className="justify-self-end text-sm text-neutral-400 transition-colors duration-300 hover:text-blue-500"
+      >
+        Voltar
+      </Link>
+      <label htmlFor="email" className="w-fit uppercase tracking-widest">
         E-mail
       </label>
       <input
         onChange={handleChange}
-        value={state.email}
+        value={login.email}
         type="email"
-        id="email"
         name="email"
-        required
-        placeholder="usuario@email.com"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+        id="email"
+        placeholder="E-mail"
+        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
       />
-      <label htmlFor="password" className="w-fit">
+      <label htmlFor="password" className="w-fit uppercase tracking-widest">
         Senha
       </label>
       <input
         onChange={handleChange}
-        value={state.password}
+        value={login.password}
         type="password"
-        id="password"
         name="password"
-        required
-        minLength={6}
-        placeholder="Mínimo de 6 dígitos"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+        id="password"
+        placeholder="Senha"
+        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
       />
-      <Link to="/register" className="w-fit">
-        Não possui uma conta? Criar
-      </Link>
-      <Link
-        to="/"
-        className="absolute -top-10 rounded border border-neutral-300 bg-neutral-50 p-1 dark:border-neutral-700 dark:bg-neutral-800"
-      >
-        Voltar
-      </Link>
-      <button className="w-fit justify-self-center rounded bg-neutral-200 p-1 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">
-        Confirmar
+      <button className="w-fit justify-self-center rounded border border-blue-500 bg-blue-700 p-2 shadow-md transition-colors duration-300 hover:bg-blue-500 focus:bg-blue-500 focus:outline-none">
+        Entrar
       </button>
+      <div className="flex w-fit items-center gap-1 justify-self-center px-2 text-sm text-neutral-400">
+        <span className="flex items-center">Ainda não possui uma conta?</span>
+        <Link
+          to="/register"
+          className="flex items-center text-neutral-50 underline underline-offset-4 transition-colors duration-200 hover:text-blue-500"
+        >
+          Criar conta
+        </Link>
+      </div>
     </form>
   );
 }
