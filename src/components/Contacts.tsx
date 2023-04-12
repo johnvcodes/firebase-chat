@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import { firestore } from "../firebase/config";
 import { Contact } from "../types/contact-type";
@@ -30,10 +30,28 @@ export default function Contacts() {
 
   async function handleSelect(contact: Contact) {
     if (!user) return;
+    let combinedId =
+      user.uid > contact.data.uid
+        ? user.uid + contact.data.uid
+        : contact.data.uid + user.uid;
+
+    if (
+      contact.lastMessage.seen === false &&
+      contact.lastMessage.senderId !== user.uid
+    ) {
+      updateDoc(doc(firestore, "chatRooms", user.uid), {
+        [`${combinedId}.lastMessage.seen`]: true,
+      });
+      updateDoc(doc(firestore, "chatRooms", contact.data.uid), {
+        [`${combinedId}.lastMessage.seen`]: true,
+      });
+    }
+
     dispatch({
       type: "changedChat",
       payload: {
         data: contact.data,
+        lastMessage: contact.lastMessage,
       },
     });
     setSearch("");
@@ -78,8 +96,10 @@ export default function Contacts() {
 
   return (
     <div className="flex w-fit flex-col border-r border-neutral-400 dark:border-neutral-700">
-      <AddContact />
-      <SearchContact searchValue={search} setSearch={setSearch} />
+      <div className="grid gap-2 border-b border-neutral-400 p-2 shadow-sm dark:border-neutral-700">
+        <AddContact />
+        <SearchContact searchValue={search} setSearch={setSearch} />
+      </div>
       {filterContacts.map((contact) => (
         <ContactCard
           key={nanoid(16)}

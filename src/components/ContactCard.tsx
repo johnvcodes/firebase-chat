@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Contact } from "../types/contact-type";
+import { useAuth } from "../contexts/AuthContext";
 
 type Props = {
   id: string;
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export default function ContactCard({ id, contact, handleSelect }: Props) {
+  const { user } = useAuth();
   return (
     <NavLink
       onClick={() => handleSelect(contact)}
@@ -47,6 +49,10 @@ export default function ContactCard({ id, contact, handleSelect }: Props) {
                 {contact.lastMessage.content}
               </span>
             </div>
+            {!contact.lastMessage.seen &&
+              contact.lastMessage.senderId !== user?.uid && (
+                <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+              )}
           </>
         );
       }}

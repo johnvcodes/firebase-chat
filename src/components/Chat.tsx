@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { doc, onSnapshot, Timestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { doc, onSnapshot, Timestamp, updateDoc } from "firebase/firestore";
 import { firestore } from "../firebase/config";
 import { useAuth } from "../contexts/AuthContext";
 import { useChat } from "../contexts/ChatContext";
 import Message from "./Message";
 import SendMessage from "./SendMessage";
-import { useNavigate } from "react-router-dom";
 import MessagesBox from "./MessagesBox";
 
 export type Message = {
@@ -38,6 +38,26 @@ export default function Chat() {
 
     return () => unsubscribe();
   }, [chat.chatId]);
+
+  useEffect(() => {
+    if (!user) return;
+    let combinedId =
+      user.uid > chat.data.uid
+        ? user.uid + chat.data.uid
+        : chat.data.uid + user.uid;
+
+    if (
+      chat.lastMessage.seen === false &&
+      chat.lastMessage.senderId !== user.uid
+    ) {
+      updateDoc(doc(firestore, "chatRooms", user.uid), {
+        [`${combinedId}.lastMessage.seen`]: true,
+      });
+      updateDoc(doc(firestore, "chatRooms", chat.data.uid), {
+        [`${combinedId}.lastMessage.seen`]: true,
+      });
+    }
+  }, [chat.lastMessage.senderId]);
 
   return (
     <div className="flex grow flex-col justify-end">
