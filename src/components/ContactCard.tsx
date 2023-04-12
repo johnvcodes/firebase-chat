@@ -19,21 +19,37 @@ export default function ContactCard({ id, contact, handleSelect }: Props) {
         `
         ${
           isActive
-            ? "bg-neutral-200 dark:bg-neutral-800"
-            : "bg-neutral-50 dark:bg-neutral-900"
+            ? "bg-neutral-400 text-neutral-50 dark:bg-neutral-700"
+            : "hover:bg-neutral-200 dark:hover:bg-neutral-800"
         }
-          flex items-center gap-2 rounded border border-neutral-300  p-2 hover:bg-neutral-100 dark:border-neutral-700  dark:hover:bg-neutral-700`
+          flex items-center gap-2 p-2`
       }
     >
-      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-rose-500">
-        {contact.data.displayName.slice(0, 1)}
-      </div>
-      <div className="flex  grow flex-col gap-1 ">
-        <h2 className="grow">{contact.data.displayName}</h2>
-        <span className="flex w-full max-w-[160px] items-center overflow-hidden overflow-ellipsis whitespace-nowrap text-sm">
-          {contact.lastMessage.content}
-        </span>
-      </div>
+      {({ isActive }) => {
+        return (
+          <>
+            <div
+              className={`${
+                isActive
+                  ? "border-neutral-300 dark:border-neutral-500"
+                  : "border-neutral-300 dark:border-neutral-700"
+              } flex h-8 w-8 items-center justify-center rounded border `}
+            >
+              {contact.data.displayName.slice(0, 1).toUpperCase()}
+            </div>
+            <div className="flex grow flex-col ">
+              <h2 className="grow">{contact.data.displayName}</h2>
+              <span
+                className={`${
+                  !isActive && "text-neutral-500 dark:text-neutral-400"
+                } flex w-full max-w-[160px] items-center overflow-hidden overflow-ellipsis whitespace-nowrap text-sm`}
+              >
+                {contact.lastMessage.content}
+              </span>
+            </div>
+          </>
+        );
+      }}
     </NavLink>
   );
 }
