@@ -6,10 +6,22 @@ import {
   UserCredential,
 } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
-import { AuthFormAction, AuthFormState } from "../types/auth-form";
 import { auth, firestore } from "../firebase/config";
+import { FirebaseError } from "firebase/app";
 
-const initialState: AuthFormState = {
+type RegisterState = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
+type RegisterAction<T = RegisterState> = {
+  type: keyof T;
+  payload: string;
+};
+
+const registerInitialState: RegisterState = {
   username: "",
   email: "",
   password: "",
@@ -17,53 +29,59 @@ const initialState: AuthFormState = {
 };
 
 function registerReducer(
-  state: AuthFormState,
-  action: AuthFormAction<AuthFormState>
-): AuthFormState {
+  state: RegisterState,
+  action: RegisterAction
+): RegisterState {
   switch (action.type) {
     case "username":
-      return { ...state, username: action.payload as string };
+      return {
+        ...state,
+        username: action.payload,
+      };
     case "email":
-      return { ...state, email: action.payload as string };
+      return {
+        ...state,
+        email: action.payload,
+      };
     case "password":
-      return { ...state, password: action.payload as string };
+      return { ...state, password: action.payload };
     case "confirmPassword":
-      return { ...state, confirmPassword: action.payload as string };
-    case "avatar":
-      return { ...state, avatar: action.payload as File };
+      return { ...state, confirmPassword: action.payload };
     default:
       return state;
   }
 }
 
 export default function Register() {
-  const [state, dispatch] = useReducer(registerReducer, initialState);
-  const navigate = useNavigate();
+  const [register, dispatch] = useReducer(
+    registerReducer,
+    registerInitialState
+  );
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    let { name, files, value } = event.target;
+    let { name, value } = event.target;
 
     dispatch({
-      type: name as keyof AuthFormState,
-      payload: (files && files[0]) || value,
+      type: name as keyof RegisterState,
+      payload: value,
     });
   }
 
-  async function handleSubmit(event: FormEvent) {
+  async function handleRegister(event: FormEvent) {
     event.preventDefault();
-    if (!state.email.includes("@")) return;
-    if (state.password.length < 6) return;
-    if (state.password !== state.confirmPassword) return;
+    if (!register.email.includes("@")) return;
+    if (register.password.length < 6) return;
+    if (register.password !== register.confirmPassword) return;
     let response: UserCredential;
 
     try {
       response = await createUserWithEmailAndPassword(
         auth,
-        state.email,
-        state.password
+        register.email,
+        register.password
       );
 
-      await updateProfile(response.user, { displayName: state.username });
+      await updateProfile(response.user, { displayName: register.username });
     } catch (error) {
       return console.log(error);
     }
@@ -71,99 +89,95 @@ export default function Register() {
     try {
       await setDoc(doc(firestore, "users", response.user.uid), {
         uid: response.user.uid,
-        displayName: state.username,
-        email: state.email,
+        displayName: register.username,
+        email: register.email,
         createdAt: serverTimestamp(),
       });
       await setDoc(doc(firestore, "chatRooms", response.user.uid), {});
     } catch (error) {
-      console.log(error);
+      let message = "Unknown error";
+      if (error instanceof FirebaseError) message = error.code;
+      return console.log(message);
     }
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="relative m-auto grid w-80 gap-2 rounded border border-neutral-50 bg-neutral-50 p-2 shadow dark:border-neutral-700 dark:bg-neutral-800"
-    >
-      <h2 className="rounded bg-neutral-200 p-2 font-bold uppercase tracking-widest dark:bg-neutral-900">
-        Crie sua conta
-      </h2>
-      <label htmlFor="username" className="w-fit">
+    <form onSubmit={handleRegister} className="m-auto grid min-w-[300px] gap-4">
+      <Link
+        to="/"
+        className="justify-self-end text-sm text-neutral-400 transition-colors duration-300 hover:text-blue-500"
+      >
+        Voltar
+      </Link>
+      <label htmlFor="username" className="w-fit uppercase tracking-widest">
         Nome de Usuário
       </label>
       <input
         onChange={handleChange}
-        value={state.username}
+        value={register.username}
         type="text"
         id="username"
         name="username"
         required
         placeholder="Nome de usuário"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
       />
-      <label htmlFor="email" className="w-fit">
+      <label htmlFor="email" className="w-fit uppercase tracking-widest">
         E-mail
       </label>
       <input
         onChange={handleChange}
-        value={state.email}
+        value={register.email}
         type="email"
         id="email"
         name="email"
         required
         placeholder="usuario@email.com"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
       />
-      <label htmlFor="password" className="w-fit">
+      <label htmlFor="password" className="w-fit uppercase tracking-widest">
         Senha
       </label>
       <input
         onChange={handleChange}
-        value={state.password}
+        value={register.password}
         type="password"
         id="password"
         name="password"
         required
         minLength={6}
         placeholder="Mínimo de 6 dígitos"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
       />
-      <label htmlFor="confirm-password" className="w-fit">
+      <label
+        htmlFor="confirm-password"
+        className="w-fit uppercase tracking-widest"
+      >
         Confirmar senha
       </label>
       <input
         onChange={handleChange}
-        value={state.confirmPassword}
+        value={register.confirmPassword}
         type="password"
         id="confirm-password"
         name="confirmPassword"
         required
         minLength={6}
         placeholder="Mínimo de 6 dígitos"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
+        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
       />
-      {/* <label htmlFor="avatar" className="w-fit">
-        Foto de perfil
-      </label>
-      <input
-        onChange={handleChange}
-        accept=".jpg, .jpeg, .png"
-        type="file"
-        id="avatar"
-        name="avatar"
-        className="rounded bg-neutral-200 p-2 dark:bg-neutral-900"
-      /> */}
-      <Link to="/login">Já possui uma conta? Entrar</Link>
-      <Link
-        to="/"
-        className="absolute -top-10 rounded border border-neutral-300 bg-neutral-50 p-1 dark:border-neutral-700 dark:bg-neutral-800"
-      >
-        Voltar
-      </Link>
-      <button className="w-fit justify-self-center rounded bg-neutral-200 p-1 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">
+      <button className="w-fit justify-self-center rounded border border-blue-500 bg-blue-700 p-2 shadow-md transition-colors duration-300 hover:bg-blue-500 focus:bg-blue-500 focus:outline-none">
         Confirmar
       </button>
+      <div className="flex w-fit items-center gap-1 justify-self-center px-2 text-sm text-neutral-400">
+        <span className="flex items-center">Já possui uma conta?</span>
+        <Link
+          to="/login"
+          className="flex items-center text-neutral-50 underline underline-offset-4 transition-colors duration-300 hover:text-blue-500"
+        >
+          Entrar
+        </Link>
+      </div>
     </form>
   );
 }

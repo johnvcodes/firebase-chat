@@ -34,7 +34,6 @@ function loginReducer(state: LoginState, action: LoginAction): LoginState {
 }
 
 export default function Login() {
-  const navigate = useNavigate();
   const [login, dispatch] = useReducer(loginReducer, loginInitialState);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -51,8 +50,8 @@ export default function Login() {
       if (error instanceof FirebaseError) message = error.code;
       return console.log(message);
     }
-    navigate("/dashboard");
   }
+
   return (
     <form onSubmit={handleLogin} className="m-auto grid min-w-[300px] gap-4">
       <Link
