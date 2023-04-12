@@ -27,9 +27,5 @@ body,
 }
 
 body {
-  @apply text-neutral-950 dark:bg-neutral-950 bg-neutral-200 dark:text-neutral-50;
-}
-
-#root {
-  @apply flex justify-center;
+  @apply bg-neutral-200 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-50;
 }

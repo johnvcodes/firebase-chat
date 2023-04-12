@@ -7,7 +7,7 @@ export default function App() {
   return (
     <AuthProvider>
       <Container>
-        <div className="flex h-full flex-col">
+        <div className="grid h-full grid-rows-[min-content_auto]">
           <Header />
           <Outlet />
         </div>
