@@ -14,7 +14,7 @@ export default function MessagesBox({ messages }: Props) {
   }, [messages]);
 
   return (
-    <div className=" flex flex-col-reverse gap-2 overflow-x-hidden p-2">
+    <div className="flex flex-col-reverse gap-2 overflow-x-hidden bg-neutral-200 p-2 shadow-inner dark:bg-neutral-950">
       <span ref={ref}></span>
       {messages
         .sort((a, b) => Number(b.date.toDate()) - Number(a.date.toDate()))

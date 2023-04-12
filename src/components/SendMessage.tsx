@@ -61,7 +61,7 @@ export default function SendMessage() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex min-h-[48px]  w-full items-center divide-neutral-300 overflow-hidden border-t border-neutral-300 bg-neutral-50 shadow dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-800"
+      className="flex min-h-[48px] w-full items-center overflow-hidden border-t border-neutral-400 bg-neutral-50 shadow transition-colors duration-300 focus-within:border-neutral-600 hover:border-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:focus-within:border-neutral-500 dark:hover:border-neutral-500"
     >
       <label htmlFor="send-message" className="sr-only">
         Envie uma mensagem!
@@ -74,9 +74,9 @@ export default function SendMessage() {
         id="send-message"
         placeholder="Envie uma mensagem..."
         autoComplete="off"
-        className="w-full bg-transparent p-2 focus:outline-none"
+        className="w-full bg-transparent px-2 focus:outline-none"
       />
-      <button className="h-full border-l bg-neutral-200 p-2 transition-colors duration-200 hover:bg-neutral-300 dark:bg-neutral-900 dark:hover:bg-neutral-700">
+      <button className="h-full px-2 transition-colors duration-300 hover:bg-neutral-300 dark:hover:bg-neutral-700">
         Enviar
       </button>
     </form>

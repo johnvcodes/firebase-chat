@@ -15,7 +15,9 @@ export default function Header() {
   }
   return (
     <header className="flex items-center justify-between border-b border-neutral-400 p-2 dark:border-neutral-700">
-      <h2 className="uppercase tracking-widest">Talq</h2>
+      <h2 className="rounded border border-blue-500 bg-blue-700 p-1 font-bold uppercase tracking-widest text-neutral-50">
+        Talq
+      </h2>
       <div className="flex items-center gap-2">
         <ThemeButton />
         {user && (

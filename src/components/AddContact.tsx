@@ -70,7 +70,7 @@ export default function AddContact({}: Props) {
 
   return (
     <form onSubmit={handleAddContact} className="flex flex-col gap-2">
-      <div className="flex items-center rounded border border-neutral-400 bg-transparent text-neutral-900 transition-colors duration-300 placeholder:text-neutral-400 focus-within:border-neutral-600 focus-within:outline-none hover:border-neutral-600 dark:border-neutral-700 dark:text-neutral-50 dark:focus-within:border-neutral-500 dark:hover:border-neutral-500">
+      <div className="flex items-center overflow-hidden rounded border  border-neutral-400 bg-transparent text-neutral-900 transition-colors duration-300 placeholder:text-neutral-400 focus-within:border-neutral-600 focus-within:outline-none hover:border-neutral-600 dark:border-neutral-700 dark:text-neutral-50 dark:focus-within:border-neutral-500 dark:hover:border-neutral-500">
         <input
           onChange={(event) => setInput(event.target.value)}
           value={input}
@@ -84,7 +84,7 @@ export default function AddContact({}: Props) {
         <label htmlFor="add-contact" className="sr-only">
           E-mail do contato
         </label>
-        <button className="px-2 py-1 transition-colors duration-300 hover:bg-neutral-500">
+        <button className="px-2 py-1 transition-colors duration-300 hover:bg-neutral-300 dark:hover:bg-neutral-700">
           <UserPlusIcon className="h-6 w-6" />
         </button>
       </div>
