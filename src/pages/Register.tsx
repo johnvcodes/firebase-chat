@@ -105,7 +105,7 @@ export default function Register() {
     <form onSubmit={handleRegister} className="m-auto grid min-w-[300px] gap-4">
       <Link
         to="/"
-        className="justify-self-end text-sm text-neutral-400 transition-colors duration-300 hover:text-blue-500"
+        className="justify-self-end text-sm text-neutral-500 transition-colors duration-300 hover:text-blue-500 dark:text-neutral-400 dark:hover:text-blue-500"
       >
         Voltar
       </Link>
@@ -119,8 +119,8 @@ export default function Register() {
         id="username"
         name="username"
         required
-        placeholder="Nome de usuário"
-        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
+        placeholder="mínimo de 4 caractéres"
+        className="rounded border border-neutral-400 bg-transparent p-2 text-neutral-900 shadow-md transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-600 focus:border-neutral-600  focus:outline-none dark:border-neutral-700 dark:text-neutral-50 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
       />
       <label htmlFor="email" className="w-fit uppercase tracking-widest">
         E-mail
@@ -133,7 +133,7 @@ export default function Register() {
         name="email"
         required
         placeholder="usuario@email.com"
-        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
+        className="rounded border border-neutral-400 bg-transparent p-2 text-neutral-900 shadow-md transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-600 focus:border-neutral-600  focus:outline-none dark:border-neutral-700 dark:text-neutral-50 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
       />
       <label htmlFor="password" className="w-fit uppercase tracking-widest">
         Senha
@@ -146,8 +146,8 @@ export default function Register() {
         name="password"
         required
         minLength={6}
-        placeholder="Mínimo de 6 dígitos"
-        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
+        placeholder="mínimo de 6 caractéres"
+        className="rounded border border-neutral-400 bg-transparent p-2 text-neutral-900 shadow-md transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-600 focus:border-neutral-600  focus:outline-none dark:border-neutral-700 dark:text-neutral-50 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
       />
       <label
         htmlFor="confirm-password"
@@ -163,17 +163,17 @@ export default function Register() {
         name="confirmPassword"
         required
         minLength={6}
-        placeholder="Mínimo de 6 dígitos"
-        className="rounded border border-neutral-700 bg-transparent p-2 text-neutral-50 shadow-md  transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-500 focus:border-neutral-500 focus:outline-none"
+        placeholder="mínimo de 6 caractéres"
+        className="rounded border border-neutral-400 bg-transparent p-2 text-neutral-900 shadow-md transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-600 focus:border-neutral-600  focus:outline-none dark:border-neutral-700 dark:text-neutral-50 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
       />
-      <button className="w-fit justify-self-center rounded border border-blue-500 bg-blue-700 p-2 shadow-md transition-colors duration-300 hover:bg-blue-500 focus:bg-blue-500 focus:outline-none">
+      <button className="w-fit justify-self-center rounded border border-blue-500 bg-blue-700 p-2 text-neutral-50 shadow-md transition-colors duration-300 hover:bg-blue-500 focus:bg-blue-500 focus:outline-none">
         Confirmar
       </button>
-      <div className="flex w-fit items-center gap-1 justify-self-center px-2 text-sm text-neutral-400">
+      <div className="flex w-fit items-center gap-1 justify-self-center px-2 text-sm text-neutral-500 dark:text-neutral-400">
         <span className="flex items-center">Já possui uma conta?</span>
         <Link
           to="/login"
-          className="flex items-center text-neutral-50 underline underline-offset-4 transition-colors duration-300 hover:text-blue-500"
+          className="flex items-center text-neutral-600 underline underline-offset-4 transition-colors duration-300 hover:text-blue-500 dark:text-neutral-300 dark:hover:text-blue-500"
         >
           Entrar
         </Link>
