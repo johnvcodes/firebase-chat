@@ -67,7 +67,7 @@ export default function AddContact({}: Props) {
   return (
     <form
       onSubmit={handleAddContact}
-      className="flex items-center gap-2 rounded border border-neutral-300 dark:border-neutral-700"
+      className="flex items-center gap-2 rounded"
     >
       <input
         onChange={(event) => setInput(event.target.value)}
@@ -77,7 +77,7 @@ export default function AddContact({}: Props) {
         id="add-contact"
         placeholder="Adicionar contato"
         required
-        className="bg-transparent p-2"
+        className="rounded border border-neutral-400 bg-transparent p-2 text-neutral-900 transition-colors duration-300 placeholder:text-neutral-400 hover:border-neutral-600 focus:border-neutral-600 focus:outline-none dark:border-neutral-700 dark:text-neutral-50 dark:hover:border-neutral-500 dark:focus:border-neutral-500"
       />
       <label htmlFor="add-contact" className="sr-only">
         Adicionar contato
