@@ -42,6 +42,7 @@ export default function SendMessage() {
           content: input,
           date: serverTimestamp(),
           senderId: user.uid,
+          seen: false,
         },
       });
       await updateDoc(doc(firestore, "chatRooms", chat.data.uid), {
@@ -49,6 +50,7 @@ export default function SendMessage() {
           content: input,
           date: serverTimestamp(),
           senderId: user.uid,
+          seen: false,
         },
       });
     } catch (error) {

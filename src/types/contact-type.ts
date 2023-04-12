@@ -9,5 +9,6 @@ export type Contact = {
     content: string;
     date: Timestamp | null;
     senderId: string;
+    seen: boolean;
   };
 };
