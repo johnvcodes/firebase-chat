@@ -34,7 +34,6 @@ export default function Contacts() {
       type: "changedChat",
       payload: {
         data: contact.data,
-        lastMessage: { content: "", date: null, senderId: "" },
       },
     });
     setSearch("");
@@ -71,12 +70,14 @@ export default function Contacts() {
     contacts &&
       user &&
       Object.values(contacts).map((item) =>
-        item.lastMessage.senderId !== user.uid ? playSound() : null
+        !item.lastMessage.seen && item.lastMessage.senderId !== user.uid
+          ? playSound()
+          : null
       );
   }, [contacts]);
 
   return (
-    <div className="flex w-fit flex-col gap-2 border-r border-neutral-300 p-2 dark:border-neutral-700">
+    <div className="flex w-fit flex-col border-r border-neutral-400 dark:border-neutral-700">
       <AddContact />
       <SearchContact searchValue={search} setSearch={setSearch} />
       {filterContacts.map((contact) => (
