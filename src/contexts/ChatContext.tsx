@@ -4,10 +4,10 @@ import { useAuth } from "./AuthContext";
 
 type ActionType = {
   type: string;
-  payload: Omit<Contact, "lastMessage">;
+  payload: Contact;
 };
 
-type ChatState = Omit<Contact, "lastMessage"> & {
+type ChatState = Contact & {
   chatId: string;
 };
 
@@ -23,6 +23,12 @@ const initialState: ChatState = {
   data: {
     displayName: "",
     uid: "",
+  },
+  lastMessage: {
+    content: "",
+    date: null,
+    seen: true,
+    senderId: "",
   },
 };
 
@@ -49,6 +55,7 @@ export function ChatProvider({ children }: { children: ReactNode }) {
             user.uid > action.payload.data.uid
               ? user.uid + action.payload.data.uid
               : action.payload.data.uid + user.uid,
+          lastMessage: action.payload.lastMessage,
         };
 
       default:
